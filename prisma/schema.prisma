@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Task {
+  id            Int      @id @default(autoincrement())
+  title         String
+  description   String?
+  nextAction    String?
+  estimateMin   Int?
+  energyCost    Int?
+  status        String   @default("todo")
+  dayPlanItems  DayPlanItem[] @relation("TaskToDayPlanItems")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model DayPlan {
+  id            Int      @id @default(autoincrement())
+  date          String   @unique
+  capacityMin   Int
+  bufferMin     Int
+  planBudgetMin Int
+  usedMin       Int      @default(0)
+  items         DayPlanItem[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model DayPlanItem {
+  id         Int      @id @default(autoincrement())
+  dayPlan    DayPlan  @relation(fields: [dayPlanId], references: [id])
+  dayPlanId  Int
+  task       Task?    @relation("TaskToDayPlanItems", fields: [taskId], references: [id])
+  taskId     Int?
+  title      String
+  plannedMin Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
