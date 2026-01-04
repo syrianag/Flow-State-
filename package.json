@@ -2,6 +2,9 @@
   "name": "flow-state",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -16,6 +19,8 @@
     "lucide-react": "^0.562.0",
     "next": "14.0.0",
     "prisma": "^5.10.0",
+    "next-auth": "^4.22.1",
+    "bcryptjs": "^2.4.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

@@ -1,9 +1,6 @@
-import { PrismaClient } from '@prisma/client'
+// lib/prisma.js
+import { PrismaClient } from "@prisma/client";
 
-// Create a singleton Prisma client for Node/Next dev environment
-const globalForPrisma = globalThis
+export const prisma = globalThis.prisma || new PrismaClient();
 
-const prisma = globalForPrisma.__prisma || new PrismaClient()
-if (!globalForPrisma.__prisma) globalForPrisma.__prisma = prisma
-
-export default prisma
+if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
