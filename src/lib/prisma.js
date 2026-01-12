@@ -1,7 +1,10 @@
 // lib/prisma.js
-import { prisma } from "./prisma";
 import { PrismaClient } from "@prisma/client";
 
+const globalForPrisma = global;
 
+const prisma = globalForPrisma.prisma || new PrismaClient();
 
-if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+
+export default prisma;

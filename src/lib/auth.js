@@ -2,7 +2,7 @@
 import { getServerSession } from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import { prisma } from "./prisma";
+import prisma from "./prisma";
 
 export function getServerAuthSession() {
   return getServerSession(authOptions);
