@@ -4,6 +4,12 @@ import Link from "next/link";
 import { TimerProvider } from "../contexts/TimerContext";
 import FloatingTimer from "../components/FloatingTimer";
 
+export const metadata = {
+  icons: {
+    icon: '/favicon.ico',
+  },
+}
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
