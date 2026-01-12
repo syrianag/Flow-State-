@@ -2,97 +2,111 @@
 
 import { useState } from 'react'
 import { Shield, Activity, Target, Timer, Calendar, Check, Play, Pause } from 'lucide-react'
+import Link from "next/link";
+import { getServerAuthSession } from "../../lib/auth";
+import { isStaff } from "../../lib/authz";
+import "../../styles/home.css";
 
 export default function Features() {
   const [activeDemo, setActiveDemo] = useState(null)
 
   return (
-    <div className="min-h-screen">
+    <div className="landing">
+      {/* Navigation */}
+      <nav className="top-nav">
+        <div className="logo-container">
+          <div className="logo">🦦</div>
+          <span className="brand-name">Flow State</span>
+        </div>
+
+        <ul className="nav-links">
+          <li><Link href="/" className="nav-link">Home</Link></li>
+          <li><Link href="/about" className="nav-link">About</Link></li>
+          <li><Link href="/why" className="nav-link">Why Flow State?</Link></li>
+          <li><Link href="/product" className="nav-link">Product</Link></li>
+          <li><Link href="/features" className="nav-link">Features</Link></li>
+        </ul>
+      </nav>
+
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-teal-50 via-white to-sage-50 py-20">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="mb-6 text-3xl font-extrabold text-gray-900">
-              Features Built for Sustainable Success
-            </h1>
-            <p className="text-xl text-gray-700">
-              Every feature is designed with one goal: help you achieve more while maintaining your wellbeing
-            </p>
-          </div>
+      <section className="hero" style={{ minHeight: '60vh', paddingTop: '4rem', paddingBottom: '4rem' }}>
+        <div className="hero-content">
+          <h1>Features Built for Sustainable Success</h1>
+          <p className="hero-description">
+            Every feature is designed with one goal: help you achieve more while maintaining your wellbeing
+          </p>
         </div>
       </section>
 
       {/* Feature 1: Capacity Gate */}
-      <section className="py-20 bg-white">
-        <div className="container">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-16 h-16 bg-teal-100 rounded-xl flex items-center justify-center">
-                <Shield className="text-teal-600" size={32} />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900">Capacity Gate</h2>
-                <p className="text-gray-700">Your guardian against overcommitment</p>
+      <section className="ai-powered-section" style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
+        <div className="ai-powered-container">
+          <div className="flex items-center gap-4 mb-8">
+            <div style={{ width: '64px', height: '64px', background: 'rgba(20, 184, 166, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Shield style={{ color: '#14b8a6' }} size={32} />
+            </div>
+            <div>
+              <h2 className="ai-powered-title" style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Capacity Gate</h2>
+              <p className="ai-powered-description" style={{ marginBottom: 0 }}>Your guardian against overcommitment</p>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem', alignItems: 'start' }}>
+            <div>
+              <h4 style={{ marginBottom: '1rem', fontSize: '1.125rem', fontWeight: '500', color: '#ffffff' }}>What it does:</h4>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Monitors your daily and weekly capacity limits</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Prevents you from adding tasks when you're at capacity</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Suggests alternatives when you try to overcommit</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Learns your actual capacity over time</span>
+                </li>
+              </ul>
+
+              <div style={{ marginTop: '1.5rem', background: 'rgba(20, 184, 166, 0.1)', borderRadius: '8px', padding: '1rem', borderLeft: '4px solid #14b8a6' }}>
+                <p style={{ fontWeight: '600', color: '#ffffff', marginBottom: '0.5rem' }}>Why it matters:</p>
+                <p style={{ fontSize: '0.95rem', color: '#a0a0a0' }}>
+                  The number one cause of burnout is taking on more than you can handle. 
+                  Capacity Gate acts like a protective barrier, ensuring you only commit to 
+                  what's sustainable.
+                </p>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div>
-                <h4 className="mb-4 text-lg font-medium text-gray-900">What it does:</h4>
-                <ul className="space-y-3 text-gray-700">
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
-                    <span>Monitors your daily and weekly capacity limits</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
-                    <span>Prevents you from adding tasks when you're at capacity</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
-                    <span>Suggests alternatives when you try to overcommit</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
-                    <span>Learns your actual capacity over time</span>
-                  </li>
-                </ul>
-
-                <div className="mt-6 bg-teal-50 rounded-lg p-4 border-l-4 border-teal-500">
-                  <p className="font-semibold text-gray-900">Why it matters:</p>
-                  <p className="text-sm text-gray-700 mt-2">
-                    The number one cause of burnout is taking on more than you can handle. 
-                    Capacity Gate acts like a protective barrier, ensuring you only commit to 
-                    what's sustainable.
-                  </p>
+            <div className="ai-feature-card" style={{ padding: '1.5rem' }}>
+              <div style={{ background: 'rgba(255, 255, 255, 0.05)', borderRadius: '8px', padding: '1rem', marginBottom: '1rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                  <span style={{ fontWeight: '600', color: '#ffffff' }}>Today's Capacity</span>
+                  <span style={{ fontSize: '0.875rem', color: '#f97316', fontWeight: '600' }}>85% Full</span>
                 </div>
+                <div style={{ width: '100%', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '9999px', height: '12px', marginBottom: '0.5rem' }}>
+                  <div style={{ background: 'linear-gradient(to right, #14b8a6, #fb923c)', height: '12px', borderRadius: '9999px', width: '85%' }}></div>
+                </div>
+                <p style={{ fontSize: '0.75rem', color: '#94a3b8' }}>6.8 hours of 8 hours planned</p>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-6">
-                <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-semibold text-gray-900">Today's Capacity</span>
-                    <span className="text-sm text-orange-600 font-semibold">85% Full</span>
+              <div style={{ background: 'rgba(251, 146, 60, 0.1)', border: '2px solid rgba(251, 146, 60, 0.3)', borderRadius: '8px', padding: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'start', gap: '0.75rem' }}>
+                  <div style={{ width: '32px', height: '32px', background: '#fb923c', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <span style={{ fontSize: '1.125rem' }}>🦦</span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
-                    <div className="bg-gradient-to-r from-teal-500 to-orange-400 h-3 rounded-full" style={{ width: '85%' }}></div>
-                  </div>
-                  <p className="text-xs text-gray-600">6.8 hours of 8 hours planned</p>
-                </div>
-
-                <div className="bg-orange-50 border-2 border-orange-200 rounded-lg p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-lg">🦦</span>
-                    </div>
-                    <div>
-                      <p className="mb-2 font-semibold text-gray-900">Whoa there! You're almost at capacity.</p>
-                      <p className="text-sm mb-3 text-gray-700">Adding this task would push you to 95%. Would you like to:</p>
-                      <div className="space-y-2">
-                        <button className="w-full text-left bg-white hover:bg-gray-50 px-3 py-2 rounded text-sm transition-colors">→ Move tomorrow's task to next week</button>
-                        <button className="w-full text-left bg-white hover:bg-gray-50 px-3 py-2 rounded text-sm transition-colors">→ Schedule this for tomorrow instead</button>
-                        <button className="w-full text-left bg-white hover:bg-gray-50 px-3 py-2 rounded text-sm transition-colors">→ Add anyway (not recommended)</button>
-                      </div>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ marginBottom: '0.5rem', fontWeight: '600', color: '#ffffff' }}>Whoa there! You're almost at capacity.</p>
+                    <p style={{ fontSize: '0.875rem', marginBottom: '0.75rem', color: '#a0a0a0' }}>Adding this task would push you to 95%. Would you like to:</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <button style={{ width: '100%', textAlign: 'left', background: 'rgba(255, 255, 255, 0.05)', padding: '0.5rem 0.75rem', borderRadius: '4px', fontSize: '0.875rem', transition: 'background 0.2s', border: 'none', color: '#a0a0a0', cursor: 'pointer' }}>→ Move tomorrow's task to next week</button>
+                      <button style={{ width: '100%', textAlign: 'left', background: 'rgba(255, 255, 255, 0.05)', padding: '0.5rem 0.75rem', borderRadius: '4px', fontSize: '0.875rem', transition: 'background 0.2s', border: 'none', color: '#a0a0a0', cursor: 'pointer' }}>→ Schedule this for tomorrow instead</button>
+                      <button style={{ width: '100%', textAlign: 'left', background: 'rgba(255, 255, 255, 0.05)', padding: '0.5rem 0.75rem', borderRadius: '4px', fontSize: '0.875rem', transition: 'background 0.2s', border: 'none', color: '#a0a0a0', cursor: 'pointer' }}>→ Add anyway (not recommended)</button>
                     </div>
                   </div>
                 </div>
@@ -103,51 +117,50 @@ export default function Features() {
       </section>
 
       {/* Feature 2: Recovery Mode */}
-      <section className="py-20 bg-gray-50">
-        <div className="container">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-16 h-16 bg-sage-100 rounded-xl flex items-center justify-center">
-                <Activity className="text-sage-700" size={32} />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900">Recovery Mode</h2>
-                <p className="text-gray-700">Automatic adaptation when you need it most</p>
+      <section className="ai-powered-section" style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
+        <div className="ai-powered-container">
+          <div className="flex items-center gap-4 mb-8">
+            <div style={{ width: '64px', height: '64px', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Activity style={{ color: '#10b981' }} size={32} />
+            </div>
+            <div>
+              <h2 className="ai-powered-title" style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Recovery Mode</h2>
+              <p className="ai-powered-description" style={{ marginBottom: 0 }}>Automatic adaptation when you need it most</p>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem', alignItems: 'start' }}>
+            <div>
+              <h4 style={{ marginBottom: '1rem', fontSize: '1.125rem', fontWeight: '500', color: '#ffffff' }}>What it does:</h4>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#10b981', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Monitors completion rates and energy patterns</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#10b981', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Detects early signs of burnout automatically</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#10b981', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Reduces expectations to "minimum viable progress"</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#10b981', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Guides you back to normal when ready</span>
+                </li>
+              </ul>
+
+              <div style={{ marginTop: '1.5rem', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '8px', padding: '1rem', borderLeft: '4px solid #10b981' }}>
+                <p style={{ fontWeight: '600', color: '#ffffff', marginBottom: '0.5rem' }}>Why it matters:</p>
+                <p style={{ fontSize: '0.95rem', color: '#a0a0a0' }}>
+                  Burnout doesn't happen overnight—it's a gradual decline. Recovery Mode catches 
+                  you before you spiral and creates space for rest without the guilt.
+                </p>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div>
-                <h4 className="mb-4 text-lg font-medium text-gray-900">What it does:</h4>
-                <ul className="space-y-3 text-gray-700">
-                  <li className="flex items-start gap-3">
-                    <Check className="text-sage-700 mt-1 flex-shrink-0" size={20} />
-                    <span>Monitors completion rates and energy patterns</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-sage-700 mt-1 flex-shrink-0" size={20} />
-                    <span>Detects early signs of burnout automatically</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-sage-700 mt-1 flex-shrink-0" size={20} />
-                    <span>Reduces expectations to "minimum viable progress"</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-sage-700 mt-1 flex-shrink-0" size={20} />
-                    <span>Guides you back to normal when ready</span>
-                  </li>
-                </ul>
-
-                <div className="mt-6 bg-sage-50 rounded-lg p-4 border-l-4 border-sage-600">
-                  <p className="font-semibold text-gray-900">Why it matters:</p>
-                  <p className="text-sm text-gray-700 mt-2">
-                    Burnout doesn't happen overnight—it's a gradual decline. Recovery Mode catches 
-                    you before you spiral and creates space for rest without the guilt.
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="ai-feature-card" style={{ padding: '1.5rem', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)' }}>
                 <div className="bg-gradient-to-br from-sage-100 to-teal-50 rounded-lg p-4 mb-4">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 bg-sage-600 rounded-full flex items-center justify-center">
@@ -193,86 +206,83 @@ export default function Features() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Feature 3: Next Action Enforcement */}
-      <section className="py-20 bg-white">
-        <div className="container">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-16 h-16 bg-teal-100 rounded-xl flex items-center justify-center">
-                <Target className="text-teal-600" size={32} />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900">Next Action Enforcement</h2>
-                <p className="text-gray-700">Kill procrastination before it starts</p>
+      <section className="ai-powered-section" style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
+        <div className="ai-powered-container">
+          <div className="flex items-center gap-4 mb-8">
+            <div style={{ width: '64px', height: '64px', background: 'rgba(20, 184, 166, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Target style={{ color: '#14b8a6' }} size={32} />
+            </div>
+            <div>
+              <h2 className="ai-powered-title" style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Next Action Enforcement</h2>
+              <p className="ai-powered-description" style={{ marginBottom: 0 }}>Kill procrastination before it starts</p>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem', alignItems: 'start' }}>
+            <div>
+              <h4 style={{ marginBottom: '1rem', fontSize: '1.125rem', fontWeight: '500', color: '#ffffff' }}>What it does:</h4>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Rejects vague tasks like "work on project"</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Requires a specific first action for every task</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Helps you identify immediate entry points</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Eliminates decision fatigue when starting work</span>
+                </li>
+              </ul>
+
+              <div style={{ marginTop: '1.5rem', background: 'rgba(20, 184, 166, 0.1)', borderRadius: '8px', padding: '1rem', borderLeft: '4px solid #14b8a6' }}>
+                <p style={{ fontWeight: '600', color: '#ffffff', marginBottom: '0.5rem' }}>Why it matters:</p>
+                <p style={{ fontSize: '0.95rem', color: '#a0a0a0' }}>
+                  Procrastination thrives on vagueness. When you know exactly what to do first, 
+                  starting becomes effortless. This is the difference between "I should work on 
+                  that" and "I'll open this file and edit this section."
+                </p>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div>
-                <h4 className="mb-4 text-lg font-medium text-gray-900">What it does:</h4>
-                <ul className="space-y-3 text-gray-700">
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
-                    <span>Rejects vague tasks like "work on project"</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
-                    <span>Requires a specific first action for every task</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
-                    <span>Helps you identify immediate entry points</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
-                    <span>Eliminates decision fatigue when starting work</span>
-                  </li>
-                </ul>
-
-                <div className="mt-6 bg-teal-50 rounded-lg p-4 border-l-4 border-teal-500">
-                  <p className="font-semibold text-gray-900">Why it matters:</p>
-                  <p className="text-sm text-gray-700 mt-2">
-                    Procrastination thrives on vagueness. When you know exactly what to do first, 
-                    starting becomes effortless. This is the difference between "I should work on 
-                    that" and "I'll open this file and edit this section."
-                  </p>
+            <div className="ai-feature-card" style={{ padding: '1.5rem', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)' }}>
+              <div style={{ marginBottom: '1rem' }}>
+                <p style={{ fontSize: '0.875rem', color: '#a0a0a0', marginBottom: '0.5rem' }}>❌ Rejected Task:</p>
+                <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '2px solid rgba(239, 68, 68, 0.3)', borderRadius: '8px', padding: '0.75rem' }}>
+                  <p style={{ fontWeight: '600', color: '#ffffff' }}>"Work on portfolio"</p>
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-6">
-                <div className="mb-4">
-                  <p className="text-sm text-gray-600 mb-2">❌ Rejected Task:</p>
-                  <div className="bg-red-50 border-2 border-red-200 rounded-lg p-3">
-                    <p className="font-semibold text-gray-900">"Work on portfolio"</p>
+              <div style={{ background: 'rgba(255, 255, 255, 0.05)', borderRadius: '8px', padding: '1rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'start', gap: '0.75rem' }}>
+                  <div style={{ width: '32px', height: '32px', background: '#14b8a6', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '0.25rem' }}>
+                    <span style={{ fontSize: '1.125rem' }}>🦦</span>
+                  </div>
+                  <div>
+                    <p style={{ marginBottom: '0.5rem', fontWeight: '600', color: '#ffffff' }}>This task is too vague!</p>
+                    <p style={{ fontSize: '0.875rem', marginBottom: '0.75rem', color: '#a0a0a0' }}>What's the first specific action you'll take? Examples:</p>
+                    <ul style={{ fontSize: '0.875rem', listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.25rem', color: '#909090' }}>
+                      <li>• "Open Figma and create hero wireframe"</li>
+                      <li>• "Write About page copy in Google Docs"</li>
+                      <li>• "Export project screenshots from XD"</li>
+                    </ul>
                   </div>
                 </div>
+              </div>
 
-                <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-lg">🦦</span>
-                    </div>
-                    <div>
-                      <p className="mb-2 font-semibold text-gray-900">This task is too vague!</p>
-                      <p className="text-sm mb-3 text-gray-700">What's the first specific action you'll take? Examples:</p>
-                      <ul className="text-sm space-y-1 text-gray-600">
-                        <li>• "Open Figma and create hero wireframe"</li>
-                        <li>• "Write About page copy in Google Docs"</li>
-                        <li>• "Export project screenshots from XD"</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="text-sm text-gray-600 mb-2">✅ Accepted Task:</p>
-                  <div className="bg-teal-50 border-2 border-teal-500 rounded-lg p-3">
-                    <p className="mb-1 font-semibold text-gray-900">"Open Figma and create hero section wireframe"</p>
-                    <p className="text-xs text-gray-600">Clear action • Easy to start • No decision fatigue</p>
-                  </div>
+              <div>
+                <p style={{ fontSize: '0.875rem', color: '#a0a0a0', marginBottom: '0.5rem' }}>✅ Accepted Task:</p>
+                <div style={{ background: 'rgba(20, 184, 166, 0.1)', border: '2px solid #14b8a6', borderRadius: '8px', padding: '0.75rem' }}>
+                  <p style={{ marginBottom: '0.25rem', fontWeight: '600', color: '#ffffff' }}>"Open Figma and create hero section wireframe"</p>
+                  <p style={{ fontSize: '0.75rem', color: '#a0a0a0' }}>Clear action • Easy to start • No decision fatigue</p>
                 </div>
               </div>
             </div>
@@ -281,92 +291,90 @@ export default function Features() {
       </section>
 
       {/* Feature 4: Focus Blocks */}
-      <section className="py-20 bg-gray-50">
-        <div className="container">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-16 h-16 bg-sage-100 rounded-xl flex items-center justify-center">
-                <Timer className="text-sage-700" size={32} />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900">Focus Blocks</h2>
-                <p className="text-gray-700">Turn time into actionable feedback</p>
+      <section className="ai-powered-section" style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
+        <div className="ai-powered-container">
+          <div className="flex items-center gap-4 mb-8">
+            <div style={{ width: '64px', height: '64px', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Timer style={{ color: '#10b981' }} size={32} />
+            </div>
+            <div>
+              <h2 className="ai-powered-title" style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Focus Blocks</h2>
+              <p className="ai-powered-description" style={{ marginBottom: 0 }}>Turn time into actionable feedback</p>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem', alignItems: 'start' }}>
+            <div>
+              <h4 style={{ marginBottom: '1rem', fontSize: '1.125rem', fontWeight: '500', color: '#ffffff' }}>What it does:</h4>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#10b981', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Launch dedicated focus timers for each task</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#10b981', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Track actual time vs. estimated time</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#10b981', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Show live progress and motivation</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#10b981', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Improve future planning with real data</span>
+                </li>
+              </ul>
+
+              <div style={{ marginTop: '1.5rem', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '8px', padding: '1rem', borderLeft: '4px solid #10b981' }}>
+                <p style={{ fontWeight: '600', color: '#ffffff', marginBottom: '0.5rem' }}>Why it matters:</p>
+                <p style={{ fontSize: '0.95rem', color: '#a0a0a0' }}>
+                  The app feels "alive" when your actions create visible progress. Plus, tracking 
+                  real time makes you better at estimating, which makes future planning more accurate 
+                  and less stressful.
+                </p>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div>
-                <h4 className="mb-4 text-lg font-medium text-gray-900">What it does:</h4>
-                <ul className="space-y-3 text-gray-700">
-                  <li className="flex items-start gap-3">
-                    <Check className="text-sage-700 mt-1 flex-shrink-0" size={20} />
-                    <span>Launch dedicated focus timers for each task</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-sage-700 mt-1 flex-shrink-0" size={20} />
-                    <span>Track actual time vs. estimated time</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-sage-700 mt-1 flex-shrink-0" size={20} />
-                    <span>Show live progress and motivation</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-sage-700 mt-1 flex-shrink-0" size={20} />
-                    <span>Improve future planning with real data</span>
-                  </li>
-                </ul>
+            <div className="ai-feature-card" style={{ padding: '1.5rem', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)' }}>
+              <div style={{ background: 'linear-gradient(to bottom right, #14b8a6, #0d9488)', borderRadius: '12px', padding: '1.5rem', color: '#ffffff', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                  <span style={{ fontSize: '0.875rem', opacity: 0.9 }}>Active Focus Block</span>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button style={{ width: '32px', height: '32px', background: 'rgba(255, 255, 255, 0.2)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s', border: 'none', cursor: 'pointer' }}>
+                      <Pause style={{ color: '#ffffff' }} size={16} />
+                    </button>
+                  </div>
+                </div>
+                
+                <h4 style={{ marginBottom: '1rem', fontSize: '1.125rem' }}>Create homepage wireframe</h4>
+                
+                <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+                  <div style={{ fontSize: '3rem', marginBottom: '0.5rem', fontWeight: '700' }}>42:18</div>
+                  <p style={{ fontSize: '0.875rem', opacity: 0.9 }}>of 60:00 estimated</p>
+                </div>
 
-                <div className="mt-6 bg-sage-50 rounded-lg p-4 border-l-4 border-sage-600">
-                  <p className="font-semibold text-gray-900">Why it matters:</p>
-                  <p className="text-sm text-gray-700 mt-2">
-                    The app feels "alive" when your actions create visible progress. Plus, tracking 
-                    real time makes you better at estimating, which makes future planning more accurate 
-                    and less stressful.
-                  </p>
+                <div style={{ width: '100%', background: 'rgba(255, 255, 255, 0.2)', borderRadius: '9999px', height: '12px', marginBottom: '1rem' }}>
+                  <div style={{ background: '#ffffff', height: '12px', borderRadius: '9999px', transition: 'all 0.3s', width: '70%' }}></div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.875rem' }}>
+                  <span>Progress</span>
+                  <span style={{ fontWeight: '600' }}>70% complete</span>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-lg">
-                <div className="bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl p-6 text-white mb-4">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm opacity-90">Active Focus Block</span>
-                    <div className="flex gap-2">
-                      <button className="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors">
-                        <Pause className="text-white" size={16} />
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <h4 className="mb-4">Create homepage wireframe</h4>
-                  
-                  <div className="text-center mb-4">
-                    <div className="text-5xl mb-2 font-bold">42:18</div>
-                    <p className="text-sm opacity-90">of 60:00 estimated</p>
-                  </div>
-
-                  <div className="w-full bg-white/20 rounded-full h-3 mb-4">
-                    <div className="bg-white h-3 rounded-full transition-all" style={{ width: '70%' }}></div>
-                  </div>
-
-                  <div className="flex items-center justify-between text-sm">
-                    <span>Progress</span>
-                    <span className="font-semibold">70% complete</span>
-                  </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', color: '#a0a0a0' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.875rem' }}>
+                  <span>Tasks completed today:</span>
+                  <span style={{ fontWeight: '600', color: '#ffffff' }}>4 of 6</span>
                 </div>
-
-                <div className="space-y-3 text-gray-700">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Tasks completed today:</span>
-                    <span className="font-semibold">4 of 6</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Focus time today:</span>
-                    <span className="font-semibold">3h 42m</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Estimation accuracy:</span>
-                    <span className="font-semibold text-teal-600">↑ 12% this week</span>
-                  </div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.875rem' }}>
+                  <span>Focus time today:</span>
+                  <span style={{ fontWeight: '600', color: '#ffffff' }}>3h 42m</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.875rem' }}>
+                  <span>Estimation accuracy:</span>
+                  <span style={{ fontWeight: '600', color: '#14b8a6' }}>↑ 12% this week</span>
                 </div>
               </div>
             </div>
@@ -375,44 +383,43 @@ export default function Features() {
       </section>
 
       {/* Feature 5: Mid-Day Replan */}
-      <section className="py-20 bg-white">
-        <div className="container">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-16 h-16 bg-teal-100 rounded-xl flex items-center justify-center">
-                <Calendar className="text-teal-600" size={32} />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900">Mid-Day Replan</h2>
-                <p className="text-gray-700">Adapt when life happens</p>
-              </div>
+      <section className="ai-powered-section" style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
+        <div className="ai-powered-container">
+          <div className="flex items-center gap-4 mb-8">
+            <div style={{ width: '64px', height: '64px', background: 'rgba(20, 184, 166, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Calendar style={{ color: '#14b8a6' }} size={32} />
             </div>
+            <div>
+              <h2 className="ai-powered-title" style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Mid-Day Replan</h2>
+              <p className="ai-powered-description" style={{ marginBottom: 0 }}>Adapt when life happens</p>
+            </div>
+          </div>
 
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div>
-                <h4 className="mb-4 text-lg font-medium text-gray-900">What it does:</h4>
-                <ul className="space-y-3 text-gray-700">
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
-                    <span>Easily adjust your schedule mid-day</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
-                    <span>Otto helps reprioritize remaining tasks</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
-                    <span>Moves tasks to tomorrow without guilt</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="text-teal-600 mt-1 flex-shrink-0" size={20} />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem', alignItems: 'start' }}>
+            <div>
+              <h4 style={{ marginBottom: '1rem', fontSize: '1.125rem', fontWeight: '500', color: '#ffffff' }}>What it does:</h4>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Easily adjust your schedule mid-day</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Otto helps reprioritize remaining tasks</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
+                  <span>Moves tasks to tomorrow without guilt</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', color: '#a0a0a0' }}>
+                  <Check style={{ color: '#14b8a6', marginTop: '0.25rem', flexShrink: 0 }} size={20} />
                     <span>Maintains realistic expectations</span>
                   </li>
                 </ul>
 
-                <div className="mt-6 bg-teal-50 rounded-lg p-4 border-l-4 border-teal-500">
-                  <p className="font-semibold text-gray-900">Why it matters:</p>
-                  <p className="text-sm text-gray-700 mt-2">
+                <div style={{ marginTop: '1.5rem', background: 'rgba(20, 184, 166, 0.1)', borderRadius: '8px', padding: '1rem', borderLeft: '4px solid #14b8a6' }}>
+                  <p style={{ fontWeight: '600', color: '#ffffff', marginBottom: '0.5rem' }}>Why it matters:</p>
+                  <p style={{ fontSize: '0.95rem', color: '#a0a0a0' }}>
                     Plans change, and that's okay. Mid-Day Replan removes the stress of "falling 
                     behind" by helping you adapt intelligently. No more carrying guilt about 
                     unfinished tasks—just smart adjustments.
@@ -420,51 +427,51 @@ export default function Features() {
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-6">
-                <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-semibold text-gray-900">Today's Plan (2:30 PM)</span>
-                    <button className="text-teal-600 text-sm font-semibold">Replan</button>
+            <div className="ai-feature-card" style={{ padding: '1.5rem', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)' }}>
+                <div style={{ background: 'rgba(255, 255, 255, 0.05)', borderRadius: '8px', padding: '1rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', marginBottom: '1rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                    <span style={{ fontWeight: '600', color: '#ffffff' }}>Today's Plan (2:30 PM)</span>
+                    <button style={{ color: '#14b8a6', fontSize: '0.875rem', fontWeight: '600', background: 'none', border: 'none', cursor: 'pointer' }}>Replan</button>
                   </div>
                   
-                  <div className="space-y-2 mb-4 text-gray-700">
-                    <div className="flex items-center gap-2 text-sm text-gray-400">
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem', color: '#a0a0a0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: '#606060' }}>
                       <Check size={16} />
-                      <span className="line-through">Morning standup</span>
+                      <span style={{ textDecoration: 'line-through' }}>Morning standup</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: '#606060' }}>
                       <Check size={16} />
-                      <span className="line-through">Review PR #234</span>
+                      <span style={{ textDecoration: 'line-through' }}>Review PR #234</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <div className="w-4 h-4 border-2 border-gray-300 rounded"></div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
+                      <div style={{ width: '16px', height: '16px', border: '2px solid #606060', borderRadius: '2px' }}></div>
                       <span>Create wireframes (2h)</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <div className="w-4 h-4 border-2 border-gray-300 rounded"></div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
+                      <div style={{ width: '16px', height: '16px', border: '2px solid #606060', borderRadius: '2px' }}></div>
                       <span>Client call prep (45m)</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <div className="w-4 h-4 border-2 border-gray-300 rounded"></div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
+                      <div style={{ width: '16px', height: '16px', border: '2px solid #606060', borderRadius: '2px' }}></div>
                       <span>Update documentation (1h)</span>
                     </div>
                   </div>
 
-                  <div className="text-sm text-orange-600 bg-orange-50 rounded p-2">⚠️ Time remaining: 3h 30m for 3h 45m of work</div>
+                  <div style={{ fontSize: '0.875rem', color: '#f97316', background: 'rgba(249, 115, 22, 0.1)', borderRadius: '4px', padding: '0.5rem' }}>⚠️ Time remaining: 3h 30m for 3h 45m of work</div>
                 </div>
 
-                <div className="bg-teal-50 border-2 border-teal-200 rounded-lg p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-lg">🦦</span>
+                <div style={{ background: 'rgba(20, 184, 166, 0.1)', border: '2px solid rgba(20, 184, 166, 0.3)', borderRadius: '8px', padding: '1rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'start', gap: '0.75rem' }}>
+                    <div style={{ width: '32px', height: '32px', background: '#14b8a6', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <span style={{ fontSize: '1.125rem' }}>🦦</span>
                     </div>
                     <div>
-                      <p className="mb-2 font-semibold text-gray-900">Need to adjust your plan?</p>
-                      <p className="text-sm mb-3 text-gray-700">You're running a bit behind. Here's what I suggest:</p>
-                      <div className="space-y-2">
-                        <button className="w-full text-left bg-white hover:bg-gray-50 px-3 py-2 rounded text-sm transition-colors">→ Move "Update documentation" to tomorrow</button>
-                        <button className="w-full text-left bg-white hover:bg-gray-50 px-3 py-2 rounded text-sm transition-colors">→ Reduce wireframes to 1.5h (ship MVP)</button>
-                        <button className="w-full text-left bg-white hover:bg-gray-50 px-3 py-2 rounded text-sm transition-colors">→ I'll handle it, no changes needed</button>
+                      <p style={{ marginBottom: '0.5rem', fontWeight: '600', color: '#ffffff' }}>Need to adjust your plan?</p>
+                      <p style={{ fontSize: '0.875rem', marginBottom: '0.75rem', color: '#a0a0a0' }}>You're running a bit behind. Here's what I suggest:</p>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <button style={{ width: '100%', textAlign: 'left', background: 'rgba(255, 255, 255, 0.05)', padding: '0.5rem 0.75rem', borderRadius: '4px', fontSize: '0.875rem', transition: 'background 0.2s', border: 'none', color: '#a0a0a0', cursor: 'pointer' }}>→ Move "Update documentation" to tomorrow</button>
+                        <button style={{ width: '100%', textAlign: 'left', background: 'rgba(255, 255, 255, 0.05)', padding: '0.5rem 0.75rem', borderRadius: '4px', fontSize: '0.875rem', transition: 'background 0.2s', border: 'none', color: '#a0a0a0', cursor: 'pointer' }}>→ Reduce wireframes to 1.5h (ship MVP)</button>
+                        <button style={{ width: '100%', textAlign: 'left', background: 'rgba(255, 255, 255, 0.05)', padding: '0.5rem 0.75rem', borderRadius: '4px', fontSize: '0.875rem', transition: 'background 0.2s', border: 'none', color: '#a0a0a0', cursor: 'pointer' }}>→ I'll handle it, no changes needed</button>
                       </div>
                     </div>
                   </div>
@@ -472,7 +479,6 @@ export default function Features() {
               </div>
             </div>
           </div>
-        </div>
       </section>
 
       {/* Google Calendar Integration */}
@@ -507,11 +513,16 @@ export default function Features() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-teal-600 to-teal-700">
-        <div className="container text-center">
-          <h2 className="text-white mb-6 text-2xl">Ready to Experience These Features?</h2>
-          <p className="text-xl text-teal-100 mb-8 max-w-2xl mx-auto">Start your free trial and see how Flow State transforms your productivity</p>
-          <button className="bg-white text-teal-600 px-8 py-4 rounded-lg hover:bg-gray-50 transition-colors font-semibold">Start Free Trial</button>
+      <section className="hero" style={{ minHeight: '50vh' }}>
+        <div className="hero-content">
+          <h2 className="hero-subtitle">Ready to Experience These Features?</h2>
+          <p className="hero-description">Start your free trial and see how Flow State transforms your productivity</p>
+          <div className="hero-buttons">
+            <Link href="/product" className="primary-button">
+              <span className="button-icon">🦦</span>
+              <span>Start Free Trial</span>
+            </Link>
+          </div>
         </div>
       </section>
     </div>

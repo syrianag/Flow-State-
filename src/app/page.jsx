@@ -1,135 +1,164 @@
-export default function HomePage() {
+// src/app/page.jsx
+import "../styles/home.css";
+import Link from "next/link";
+import { getServerAuthSession } from "../lib/auth";
+import { isStaff } from "../lib/authz";
+
+export default async function HomePage() {
+  const session = await getServerAuthSession();
+  const showStaff = isStaff(session);
+
   return (
-    <div className="min-h-screen bg-charcoal text-soft-white">
-      {/* Hero Section (styled to match Who Benefits Most) */}
-      <section className="hero-wrap bg-gradient-to-br from-sage/8 to-teal/8">
-        <div className="max-w-7xl mx-auto px-8 text-center">
-          <h1 className="hero-title">Flow State</h1>
-          <p className="hero-sub">Stop the burnout cycle. Plan smarter, not harder.</p>
-          <p className="hero-desc">The productivity system that actually gets you—helping you plan around real energy, break down big tasks, and finish strong without burning out.</p>
-          <a href="/product" className="cta-button">Try Flow State →</a>
+    <div className="landing">
+      {/* Navigation */}
+      <nav className="top-nav">
+        <div className="logo-container">
+          <div className="logo">🦦</div>
+          <span className="brand-name">Flow State</span>
         </div>
-      </section>
 
-      {/* Who Benefits Section */}
-      <section className="bg-gradient-to-br from-sage/8 to-teal/8 py-16 my-12">
-        <div className="max-w-7xl mx-auto px-8">
-          <h2 className="text-4xl font-bold text-center text-soft-white mb-12">Who Benefits Most?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="benefit-section">
-                <h3 className="benefit-header">Students</h3>
-                <div className="bullet-container">
-                  <div className="bullet-item">
-                    <div className="diamond"></div>
-                    <p className="bullet-text">Balancing classes, deadlines, work, and life?</p>
-                  </div>
-                  <div className="bullet-item">
-                    <div className="diamond"></div>
-                    <p className="bullet-text">Stop overloading your schedule and start finishing what matters—without the all-nighters and stress spirals.</p>
-                  </div>
-                </div>
-              </div>
+        <ul className="nav-links">
+          <li><Link href="/" className="nav-link">Home</Link></li>
+          <li><Link href="/about" className="nav-link">About</Link></li>
+          <li><Link href="/why" className="nav-link">Why Flow State?</Link></li>
+          <li><Link href="/product" className="nav-link">Product</Link></li>
+          <li><Link href="/features" className="nav-link">Features</Link></li>
 
-              <div className="benefit-section mt-10">
-                <h3 className="benefit-header">Early-Career Professionals</h3>
-                <div className="bullet-container">
-                  <div className="bullet-item">
-                    <div className="diamond"></div>
-                    <p className="bullet-text">New to the working world?</p>
-                  </div>
-                  <div className="bullet-item">
-                    <div className="diamond"></div>
-                    <p className="bullet-text">Figure out your real capacity, protect your energy, and show up consistently.</p>
-                  </div>
-                  <div className="bullet-item">
-                    <div className="diamond"></div>
-                    <p className="bullet-text">Build a reputation without burning out.</p>
-                  </div>
-                </div>
-              </div>
+          {/* Staff-only links: only show when staff is signed in */}
+          {showStaff && (
+            <>
+              <li><Link href="/rubric" className="nav-link">Rubric</Link></li>
+              <li><Link href="/reflection" className="nav-link">Reflection</Link></li>
+            </>
+          )}
+        </ul>
+      </nav>
 
-              <div className="benefit-section mt-10">
-                <h3 className="benefit-header">Freelancers</h3>
-                <div className="bullet-container">
-                  <div className="bullet-item">
-                    <div className="diamond"></div>
-                    <p className="bullet-text">Managing multiple clients and projects simultaneously.</p>
-                  </div>
-                  <div className="bullet-item">
-                    <div className="diamond"></div>
-                    <p className="bullet-text">Prevent overcommitment by seeing your real capacity.</p>
-                  </div>
-                  <div className="bullet-item">
-                    <div className="diamond"></div>
-                    <p className="bullet-text">Say yes to the right work and no to burnout.</p>
-                  </div>
-                </div>
-              </div>
+      {/* Hero Section */}
+      <section className="hero" id="home">
+        <div className="hero-content">
+          <h1>Flow State</h1>
+          <p className="hero-subtitle">Stop the burnout cycle. Plan smarter, not harder.</p>
+          <p className="hero-description">
+            The productivity system that actually gets you—helping you plan around real energy, break down big tasks,
+            and finish strong without burning out.
+          </p>
+
+          <div className="hero-buttons">
+            <Link href="/product" className="primary-button">
+              <span className="button-icon">🦦</span>
+              <span>Try Flow State</span>
+            </Link>
+          </div>
+
+          <div className="staff-portal">
+            <Link href={session ? "/staff" : "/login?callbackUrl=/staff"} className="staff-button">
+              Staff Portal
+            </Link>
+            <p className="staff-subtitle">For instructors & coaches</p>
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="max-w-7xl mx-auto px-8 py-20">
-        <h2 className="text-4xl font-bold text-center text-soft-white mb-4">How Flow State Works</h2>
-        <p className="text-lg text-gray text-center max-w-4xl mx-auto mb-12 leading-relaxed">Flow State combines a short daily check-in, capacity-aware planning rules, and focused work sessions to produce realistic daily plans. Instead of asking you to estimate large, vague blocks of work, it emphasizes clarity, honesty, and energy awareness.</p>
+      {/* AI-Powered Productivity Section */}
+      <section className="ai-powered-section">
+        <div className="ai-powered-container">
+          <div className="ai-powered-subtitle">AI-POWERED PRODUCTIVITY</div>
+          <h2 className="ai-powered-title">
+            Work Smarter, <span className="gradient-text">Not Harder</span>
+          </h2>
+          <p className="ai-powered-description">
+            Flow State helps you maintain peak productivity while preventing burnout. Let Otto, your AI companion,
+            guide you to sustainable success.
+          </p>
+          <div className="ai-powered-buttons">
+            <Link href="/product" className="btn-ai-primary">
+              Get Started Free →
+            </Link>
+            <Link href="/features" className="btn-ai-secondary">
+              See How It Works
+            </Link>
+          </div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
-          <div className="bg-card-dark p-8 rounded-2xl border-l-4 border-sage shadow-lg hover:-translate-y-0.5 hover:shadow-2xl transition-all">
-            <h3 className="text-xl font-semibold text-soft-white mb-3">Daily Check-In</h3>
-            <p className="text-gray leading-relaxed">Quick check-ins (minutes available, energy level, stress level) calculate your realistic capacity for the day—not what you wish you could do, but what you actually can.</p>
+        <div className="ai-hero-image">
+          <span>Workspace Image</span>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="ai-stats-grid">
+          <div className="ai-stat-item">
+            <div className="ai-stat-value">95%</div>
+            <div className="ai-stat-label">Less Burnout</div>
+          </div>
+          <div className="ai-stat-item">
+            <div className="ai-stat-value">3x</div>
+            <div className="ai-stat-label">Better Focus</div>
+          </div>
+          <div className="ai-stat-item">
+            <div className="ai-stat-value">92%</div>
+            <div className="ai-stat-label">Task Completion</div>
+          </div>
+          <div className="ai-stat-item">
+            <div className="ai-stat-value">50%</div>
+            <div className="ai-stat-label">More Recovery</div>
+          </div>
+        </div>
+
+        {/* Features Section */}
+        <div className="ai-features-section">
+          <h2 className="ai-features-title">Everything You Need to Stay in Flow</h2>
+          <p className="ai-features-subtitle">
+            Intelligent features that adapt to your energy levels and help you work at your best
+          </p>
+
+          <div className="ai-feature-card">
+            <div className="ai-feature-icon">🛡️</div>
+            <h3>Capacity Gate</h3>
+            <p>Prevents task overload by enforcing daily and weekly limits based on your capacity</p>
           </div>
 
-          <div className="bg-card-dark p-8 rounded-2xl border-l-4 border-teal shadow-lg hover:-translate-y-0.5 hover:shadow-2xl transition-all">
-            <h3 className="text-xl font-semibold text-soft-white mb-3">Capacity Gate</h3>
-            <p className="text-gray leading-relaxed">A hard limit prevents scheduling more work than your plan budget. If you try to overcommit, the system pushes back and asks you to shrink, defer, or drop tasks.</p>
+          <div className="ai-feature-card">
+            <div className="ai-feature-icon">⏰</div>
+            <h3>Recovery Mode</h3>
+            <p>Automatically reduces expectations when signs of burnout are detected</p>
           </div>
 
-          <div className="bg-card-dark p-8 rounded-2xl border-l-4 border-sage shadow-lg hover:-translate-y-0.5 hover:shadow-2xl transition-all">
-            <h3 className="text-xl font-semibold text-soft-white mb-3">Recovery Mode</h3>
-            <p className="text-gray leading-relaxed">On low-energy or high-stress days, Recovery Mode automatically reduces expectations, increases buffer time, and suggests smaller, achievable tasks.</p>
+          <div className="ai-feature-card">
+            <div className="ai-feature-icon">🎯</div>
+            <h3>Next Action</h3>
+            <p>Eliminates procrastination by requiring specific, actionable tasks</p>
           </div>
 
-          <div className="bg-card-dark p-8 rounded-2xl border-l-4 border-teal shadow-lg hover:-translate-y-0.5 hover:shadow-2xl transition-all">
-            <h3 className="text-xl font-semibold text-soft-white mb-3">Next Action Enforcement</h3>
-            <p className="text-gray leading-relaxed">Tasks can't be scheduled unless they have a clear next action. This kills procrastination by making every task immediately actionable.</p>
-          </div>
-
-          <div className="bg-card-dark p-8 rounded-2xl border-l-4 border-sage shadow-lg hover:-translate-y-0.5 hover:shadow-2xl transition-all">
-            <h3 className="text-xl font-semibold text-soft-white mb-3">Focus Blocks</h3>
-            <p className="text-gray leading-relaxed">Start timed focus sessions tied to tasks. Real time spent is logged automatically, keeping your estimates honest and your plan budget accurate.</p>
-          </div>
-
-          <div className="bg-card-dark p-8 rounded-2xl border-l-4 border-teal shadow-lg hover:-translate-y-0.5 hover:shadow-2xl transition-all">
-            <h3 className="text-xl font-semibold text-soft-white mb-3">AI Task Shaper</h3>
-            <p className="text-gray leading-relaxed">Turn vague tasks into schedulable work. The AI suggests next actions, estimates, energy cost, a Definition of Done, and a minimum viable version for tired days.</p>
+          <div className="ai-feature-card">
+            <div className="ai-feature-icon">⚡</div>
+            <h3>Focus Blocks</h3>
+            <p>Time tracking tied to tasks with live progress feedback</p>
           </div>
         </div>
       </section>
 
-      {/* Why It Helps Section */}
-      <section className="bg-gradient-to-br from-teal/8 to-sage/8 py-16 my-12">
-        <div className="max-w-5xl mx-auto px-8 text-center">
-          <h2 className="text-4xl font-bold text-soft-white mb-6">Why It Helps</h2>
-          <p className="text-xl text-gray leading-relaxed mb-8">Users get plans that match real-life energy and time, which reduces overcommitment, procrastination, and burnout while improving output quality.</p>
-          <div className="flex flex-wrap justify-center gap-6 mt-8">
-            <span className="bg-card-dark px-6 py-3 rounded-full text-sage font-medium border border-sage/30 shadow-md hover:border-sage/60 hover:-translate-y-0.5 transition-all">Reduces overcommitment</span>
-            <span className="bg-card-dark px-6 py-3 rounded-full text-sage font-medium border border-sage/30 shadow-md hover:border-sage/60 hover:-translate-y-0.5 transition-all">Prevents procrastination</span>
-            <span className="bg-card-dark px-6 py-3 rounded-full text-sage font-medium border border-sage/30 shadow-md hover:border-sage/60 hover:-translate-y-0.5 transition-all">Protects against burnout</span>
-            <span className="bg-card-dark px-6 py-3 rounded-full text-sage font-medium border border-sage/30 shadow-md hover:border-sage/60 hover:-translate-y-0.5 transition-all">Improves work quality</span>
-            <span className="bg-card-dark px-6 py-3 rounded-full text-sage font-medium border border-sage/30 shadow-md hover:border-sage/60 hover:-translate-y-0.5 transition-all">Builds realistic planning skills</span>
-            <span className="bg-card-dark px-6 py-3 rounded-full text-sage font-medium border border-sage/30 shadow-md hover:border-sage/60 hover:-translate-y-0.5 transition-all">Adapts to your energy</span>
+      {/* Who Benefits */}
+      <section className="benefits">
+        <h2>Who Benefits Most?</h2>
+
+        <div className="benefits-circles">
+          <div className="benefit-circle circle-1">
+            <h3>Students</h3>
+            <p>Balancing classes, deadlines, work, and life? Stop overloading your schedule and start finishing what matters—without the all-nighters and stress spirals.</p>
+          </div>
+
+          <div className="benefit-circle circle-2">
+            <h3>Early-Career Professionals</h3>
+            <p>New to the working world? Figure out your real capacity, protect your energy, and show up consistently. Build a reputation without burning out.</p>
+          </div>
+
+          <div className="benefit-circle circle-3">
+            <h3>Freelancers</h3>
+            <p>Juggling multiple clients and projects? Manage your workload without overcommitting. Protect your energy while maintaining steady income.</p>
           </div>
         </div>
-      </section>
-
-      {/* Footer CTA */}
-      <section className="max-w-7xl mx-auto px-8 py-20 text-center">
-        <h2 className="text-4xl font-bold text-soft-white mb-4">Ready to plan realistically?</h2>
-        <p className="text-lg text-gray mb-8">Start using Flow State today and stop the overcommit-crash cycle.</p>
-        <a href="/product" className="inline-block bg-teal text-soft-white px-10 py-4 text-lg font-semibold rounded-xl hover:bg-teal/80 transition-all hover:-translate-y-0.5 shadow-lg shadow-teal/30 hover:shadow-xl hover:shadow-teal/40">Get Started →</a>
       </section>
     </div>
-  )
+  );
 }
-

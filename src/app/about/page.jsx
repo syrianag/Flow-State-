@@ -1,31 +1,65 @@
 import { Heart, Users, Target, Lightbulb } from 'lucide-react'
+import "../../styles/home.css";
+import Link from "next/link";
+import { getServerAuthSession } from "../../lib/auth";
+import { isStaff } from "../../lib/authz";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const session = await getServerAuthSession();
+  const showStaff = isStaff(session);
+
   return (
-    <div className="min-h-screen bg-charcoal text-soft-white">
+    <div className="landing">
+      {/* Navigation */}
+      <nav className="top-nav">
+        <div className="logo-container">
+          <div className="logo">🦦</div>
+          <span className="brand-name">Flow State</span>
+        </div>
+
+        <ul className="nav-links">
+          <li><Link href="/" className="nav-link">Home</Link></li>
+          <li><Link href="/about" className="nav-link">About</Link></li>
+          <li><Link href="/why" className="nav-link">Why Flow State?</Link></li>
+          <li><Link href="/product" className="nav-link">Product</Link></li>
+          <li><Link href="/features" className="nav-link">Features</Link></li>
+
+          {/* Staff-only links: only show when staff is signed in */}
+          {showStaff && (
+            <>
+              <li><Link href="/rubric" className="nav-link">Rubric</Link></li>
+              <li><Link href="/reflection" className="nav-link">Reflection</Link></li>
+            </>
+          )}
+        </ul>
+      </nav>
+
       {/* HERO - large centered title + subtitle */}
-      <section className="py-20">
-        <div className="max-w-5xl mx-auto px-8 text-center">
-          <h1 className="text-6xl font-extrabold leading-tight mb-6">About Flow State</h1>
-          <p className="text-xl text-gray max-w-3xl mx-auto">We believe that true productivity isn't about working harder—it's about working in harmony with your natural energy and capacity.</p>
+      <section className="hero">
+        <div className="hero-content">
+          <h1>About Flow State</h1>
+          <p className="hero-description">We believe that true productivity isn't about working harder—it's about working in harmony with your natural energy and capacity.</p>
         </div>
       </section>
 
       {/* MISSION - two column: text left, image right */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+      <section className="ai-powered-section">
+        <div className="ai-powered-container">
+          <div className="ai-powered-subtitle">OUR MISSION</div>
+          <h2 className="ai-powered-title">
+            Built to Change the <span className="gradient-text">Productivity Narrative</span>
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center' }}>
             <div>
-              <h2 className="text-5xl font-bold mb-6">Our Mission</h2>
-              <p className="text-lg text-gray mb-4">Flow State was born from a simple observation: most productivity tools push you to do more, but rarely help you sustain it. We saw talented professionals burning out, brilliant students overwhelmed, and passionate creators losing their spark.</p>
-              <p className="text-lg text-gray mb-4">We built Flow State to change that narrative. Our mission is to help you achieve your goals while maintaining your wellbeing, energy, and passion for your work.</p>
-              <p className="text-lg text-gray">With Otto, our AI companion, we've created a system that doesn't just track what you do—it actively protects you from overcommitment and guides you toward sustainable success.</p>
+              <p className="ai-powered-description" style={{ marginBottom: '1.5rem' }}>Flow State was born from a simple observation: most productivity tools push you to do more, but rarely help you sustain it. We saw talented professionals burning out, brilliant students overwhelmed, and passionate creators losing their spark.</p>
+              <p className="ai-powered-description" style={{ marginBottom: '1.5rem' }}>We built Flow State to change that narrative. Our mission is to help you achieve your goals while maintaining your wellbeing, energy, and passion for your work.</p>
+              <p className="ai-powered-description">With Otto, our AI companion, we've created a system that doesn't just track what you do—it actively protects you from overcommitment and guides you toward sustainable success.</p>
             </div>
 
             <div>
               {/* Photo removed per request; keep a neutral placeholder to preserve layout */}
-              <div className="w-full rounded-3xl shadow-2xl bg-card-dark h-48 flex items-center justify-center">
-                <span className="text-gray">(photo removed)</span>
+              <div className="ai-hero-image" style={{ height: '300px' }}>
+                <span>(photo removed)</span>
               </div>
             </div>
           </div>
@@ -33,71 +67,74 @@ export default function AboutPage() {
       </section>
 
       {/* VALUES - centered heading, 4 column values */}
-      <section className="py-16 bg-transparent">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-extrabold mb-4">Our Core Values</h2>
-            <p className="text-lg text-gray max-w-3xl mx-auto">These principles guide every feature we build and every decision we make.</p>
-          </div>
+      <section className="ai-powered-section" style={{ background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)' }}>
+        <div className="ai-powered-container">
+          <h2 className="ai-powered-title" style={{ textAlign: 'center' }}>Our Core Values</h2>
+          <p className="ai-powered-description" style={{ textAlign: 'center', margin: '0 auto 3rem' }}>These principles guide every feature we build and every decision we make.</p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center bg-[rgba(91,138,154,0.08)]">
-                <Heart size={28} style={{ color: 'var(--teal)' }} />
+          <div className="ai-stats-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
+            <div className="ai-stat-item" style={{ textAlign: 'center', padding: '2rem' }}>
+              <div style={{ width: '80px', height: '80px', margin: '0 auto 1rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(91,138,154,0.08)' }}>
+                <Heart size={28} style={{ color: '#14b8a6' }} />
               </div>
-              <h4 className="text-xl font-semibold mb-2">Wellbeing First</h4>
-              <p className="text-gray">Your mental and physical health always comes before productivity metrics.</p>
+              <h4 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '0.5rem', color: '#14b8a6' }}>Wellbeing First</h4>
+              <p className="ai-stat-label">Your mental and physical health always comes before productivity metrics.</p>
             </div>
 
-            <div className="text-center">
-              <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center bg-[rgba(122,155,119,0.08)]">
-                <Target size={28} style={{ color: 'var(--sage)' }} />
+            <div className="ai-stat-item" style={{ textAlign: 'center', padding: '2rem' }}>
+              <div style={{ width: '80px', height: '80px', margin: '0 auto 1rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(122,155,119,0.08)' }}>
+                <Target size={28} style={{ color: '#10b981' }} />
               </div>
-              <h4 className="text-xl font-semibold mb-2">Sustainable Growth</h4>
-              <p className="text-gray">Progress that lasts is built on consistency, not burnout-inducing sprints.</p>
+              <h4 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '0.5rem', color: '#10b981' }}>Sustainable Growth</h4>
+              <p className="ai-stat-label">Progress that lasts is built on consistency, not burnout-inducing sprints.</p>
             </div>
 
-            <div className="text-center">
-              <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center bg-[rgba(91,138,154,0.08)]">
-                <Lightbulb size={28} style={{ color: 'var(--teal)' }} />
+            <div className="ai-stat-item" style={{ textAlign: 'center', padding: '2rem' }}>
+              <div style={{ width: '80px', height: '80px', margin: '0 auto 1rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(91,138,154,0.08)' }}>
+                <Lightbulb size={28} style={{ color: '#14b8a6' }} />
               </div>
-              <h4 className="text-xl font-semibold mb-2">Intelligent Adaptation</h4>
-              <p className="text-gray">Our AI learns your patterns and adapts to support you where you need it most.</p>
+              <h4 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '0.5rem', color: '#14b8a6' }}>Intelligent Adaptation</h4>
+              <p className="ai-stat-label">Our AI learns your patterns and adapts to support you where you need it most.</p>
             </div>
 
-            <div className="text-center">
-              <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center bg-[rgba(122,155,119,0.08)]">
-                <Users size={28} style={{ color: 'var(--sage)' }} />
+            <div className="ai-stat-item" style={{ textAlign: 'center', padding: '2rem' }}>
+              <div style={{ width: '80px', height: '80px', margin: '0 auto 1rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(122,155,119,0.08)' }}>
+                <Users size={28} style={{ color: '#10b981' }} />
               </div>
-              <h4 className="text-xl font-semibold mb-2">Community Focus</h4>
-              <p className="text-gray">Built with feedback from real users facing real productivity challenges.</p>
+              <h4 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '0.5rem', color: '#10b981' }}>Community Focus</h4>
+              <p className="ai-stat-label">Built with feedback from real users facing real productivity challenges.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* TEAM / TESTIMONIAL */}
-      <section className="py-16">
-        <div className="max-w-6xl mx-auto px-8 text-center">
-          <h2 className="text-4xl font-extrabold mb-6">Built by People Who Get It</h2>
-          <p className="text-lg text-gray max-w-3xl mx-auto mb-8">Our team has experienced the cycle of productivity and burnout firsthand. We've been the overcommitted developer, the overwhelmed student, the creator who lost their creative spark. Flow State is the tool we wished we had.</p>
+      <section className="ai-powered-section">
+        <div className="ai-powered-container" style={{ textAlign: 'center' }}>
+          <h2 className="ai-powered-title">Built by People Who Get It</h2>
+          <p className="ai-powered-description" style={{ margin: '0 auto 3rem' }}>Our team has experienced the cycle of productivity and burnout firsthand. We've been the overcommitted developer, the overwhelmed student, the creator who lost their creative spark. Flow State is the tool we wished we had.</p>
 
-            <div className="mx-auto max-w-3xl bg-card-dark rounded-2xl p-8 border border-sage/20">
-            <div className="flex items-center justify-center mb-4">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center bg-gradient-to-br from-teal to-sage text-4xl">🦦</div>
+          <div className="ai-feature-card" style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+              <div style={{ width: '80px', height: '80px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #14b8a6 0%, #10b981 100%)', fontSize: '2.5rem' }}>🦦</div>
             </div>
-            <p className="text-lg italic text-gray">"We're not just building a productivity app. We're creating a companion that helps you work at your best while staying healthy, energized, and passionate about what you do."</p>
-            <p className="mt-4 font-semibold" style={{ color: 'var(--teal)' }}>— The Flow State Team</p>
+            <p className="ai-powered-description" style={{ fontStyle: 'italic', marginBottom: '1rem' }}>"We're not just building a productivity app. We're creating a companion that helps you work at your best while staying healthy, energized, and passionate about what you do."</p>
+            <p style={{ fontWeight: '600', color: '#14b8a6' }}>— The Flow State Team</p>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-card-dark to-charcoal">
-        <div className="max-w-4xl mx-auto px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4 text-soft-white">Join Our Journey</h2>
-          <p className="text-lg text-gray mb-8">Be part of a community that values sustainable productivity and wellbeing.</p>
-          <button className="cta-button">Get Started Today</button>
+      <section className="hero" style={{ minHeight: '50vh' }}>
+        <div className="hero-content">
+          <h2 className="hero-subtitle">Join Our Journey</h2>
+          <p className="hero-description">Be part of a community that values sustainable productivity and wellbeing.</p>
+          <div className="hero-buttons">
+            <button className="primary-button">
+              <span className="button-icon">🦦</span>
+              <span>Get Started Today</span>
+            </button>
+          </div>
         </div>
       </section>
     </div>

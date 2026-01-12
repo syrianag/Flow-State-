@@ -1,12 +1,6 @@
-import { redirect } from 'next/navigation'
-import { getServerAuthSession } from './auth'
-
-export async function requireAuth(redirectTo = '/') {
-  const session = await getServerAuthSession()
-  if (!session) redirect(`/login?callbackUrl=${encodeURIComponent(redirectTo)}`)
-  return session
-}
+// src/lib/authz.js
+const STAFF_ROLES = new Set(["COACH", "INSTRUCTOR", "ADMIN"]);
 
 export function isStaff(session) {
-  return !!session && ['COACH', 'INSTRUCTOR', 'ADMIN'].includes(session.user?.role)
+  return STAFF_ROLES.has(session?.user?.role);
 }
